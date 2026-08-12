@@ -1,0 +1,113 @@
+package com.atillatpc.runner;
+
+
+import com.atillatpc.business.dto.ERole;
+import com.atillatpc.business.dto.RegisterDto;
+import com.atillatpc.business.dto.RoleDto;
+import com.atillatpc.business.services.interfaces.IRegisterServices;
+import com.atillatpc.business.services.interfaces.IRoleService;
+import com.atillatpc.data.entity.RoleEntity;
+import com.atillatpc.data.repository.IRegisterRepository;
+import com.atillatpc.data.repository.IRoleRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+// email@gmail.com
+// Java12345@.
+
+
+// LOMBOK
+@RequiredArgsConstructor
+@Log4j2
+
+@Component // Spring Boot bir parçasısın.
+@Order(1) // Runner Sırası
+public class _1_Register_Login implements CommandLineRunner {
+    // Injection
+    private final IRoleRepository iRoleRepository;
+    private final IRoleService iRoleService;
+
+    private final IRegisterRepository iRegisterRepository;
+    private final IRegisterServices iRegisterServices;
+
+    // Role
+    private void roleAdd(){
+        //log.info("role And Register Create");
+        System.out.println("Role Create");
+        List<RoleDto> roleDtoList = new ArrayList<>();
+
+        synchronized (this){
+            Long adminRoleID= iRoleRepository.save(RoleEntity.builder().roleId(0L).roleName(ERole.ADMIN.toString()).build()).getRoleId();
+            Long writerRoleID= iRoleRepository.save(RoleEntity.builder().roleId(0L).roleName(ERole.WRITER.toString()).build()).getRoleId();
+            Long userRoleID= iRoleRepository.save(RoleEntity.builder().roleId(0L).roleName(ERole.USER.toString()).build()).getRoleId();
+
+            // Thread
+            Thread thread= new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            });
+        }
+    }
+
+
+    // User
+    private void userAdd(){
+        //log.info("role And Register Create");
+        System.out.println("role And Register Create");
+        synchronized (this){
+            Long adminRoleID= iRoleRepository.save(RoleEntity.builder().roleId(0L).roleName(ERole.ADMIN.toString()).build()).getRoleId();
+            Long writerRoleID= iRoleRepository.save(RoleEntity.builder().roleId(0L).roleName(ERole.WRITER.toString()).build()).getRoleId();
+            Long userRoleID= iRoleRepository.save(RoleEntity.builder().roleId(0L).roleName(ERole.USER.toString()).build()).getRoleId();
+
+            // Thread
+            Thread thread= new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            });
+
+            // Eğer isterseniz proje ayağa kalkarken buradki gibi mail göndererek direk kullanıcı eklesin
+            boolean isLoginDataSet =false;
+            if(isLoginDataSet){
+                for (long i = 1; i <=3 ; i++) {
+                    // REGISTER
+                    RegisterDto registerDto=new RegisterDto();
+                    registerDto.setRegisterNickName("nickname"+i);
+                    registerDto.setRegisterName("name"+i);
+                    registerDto.setRegisterSurname("surname"+i);
+                    StringBuilder stringBuilder=new StringBuilder();
+                    stringBuilder.append("email").append("@gmail.com");
+                    registerDto.setRegisterEmail(stringBuilder.toString());
+                    registerDto.setRegisterPassword("Java12345@.");
+
+                    // USER DETAILS
+                    registerDto.setIsEnabled(true);
+                    registerDto.setIsCredentialsNonExpired(true);
+                    registerDto.setIsAccountNonExpired(true);
+                    registerDto.setIsAccountNonLocked(true);
+
+                    // KAYDET
+                    iRegisterServices.objectServiceCreate(i,registerDto);
+                    System.out.println("EKLENDI");
+                }
+            }
+        }
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        //log.info("Command Line Runner Bean-2");
+        //System.out.println("Command Line Runner Bean-2");
+        roleAdd();
+    }
+
+} //end BlogCommandLineRunner1

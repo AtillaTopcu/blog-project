@@ -1,0 +1,41 @@
+# React
+frontend/node_modules/
+frontend/dist/
+
+# Environment variables
+.env
+frontend/.env
+frontend/.env.*
+
+# Spring Boot
+target/
+*.log
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+# Local database persistence
+database_memory_persist/
+
+# VS Code
+.vscode/
